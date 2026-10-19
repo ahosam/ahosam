@@ -1,1 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hosam Al Ali — Cloud Architect</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet" />
+
+    <style>
+        :root {
+            --bg: #0d0f12;
+            --card-bg: rgba(22, 27, 34, 0.7);
+            --card-hover: rgba(30, 37, 46, 0.9);
+            --border: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(255, 255, 255, 0.2);
+            --text-primary: #f0f3f6;
+            --text-secondary: #8b949e;
+            --text-muted: #6e7681;
+            --accent: #ee0000;
+            /* Red Hat Accent Red */
+            --accent-glow: rgba(238, 0, 0, 0.15);
+            --radius: 12px;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            padding: 3rem 1.5rem 5rem;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 820px;
+            margin: 0 auto;
+        }
+
+        /* Header Profile */
+        header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .avatar-wrapper {
+            position: relative;
+            margin-bottom: 1.25rem;
+        }
+
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--border);
+            box-shadow: 0 0 25px var(--accent-glow);
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.35rem;
+        }
+
+        .subtitle {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .subtitle span {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        nav {
+            display: flex;
+            gap: 1.25rem;
+            font-size: 0.9rem;
+            font-family: var(--font-mono);
+        }
+
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        nav a:hover {
+            color: var(--text-primary);
+        }
+
+        /* Section Styling */
+        section {
+            margin-bottom: 4rem;
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            color: var(--text-primary);
+        }
+
+        h2::before {
+            content: "";
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        /* Experience Timeline */
+        .timeline {
+            position: relative;
+            border-left: 1px solid var(--border);
+            margin-left: 1rem;
+            padding-left: 1.75rem;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2.25rem;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -2.15rem;
+            top: 0.45rem;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--bg);
+            border: 2px solid var(--accent);
+        }
+
+        .role-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .company-name {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--accent);
+            margin-bottom: 0.2rem;
+        }
+
+        .meta {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 0.6rem;
+        }
+
+        .timeline-item ul {
+            list-style-type: none;
+        }
+
+        .timeline-item li {
+            position: relative;
+            padding-left: 1.1rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.35rem;
+        }
+
+        .timeline-item li::before {
+            content: "›";
+            position: absolute;
+            left: 0;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        /* Cards Grid (Links & Projects) */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 1rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.25rem;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .card:hover {
+            background: var(--card-hover);
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+        }
+
+        .card-category {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.4rem;
+        }
+
+        .card-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card-title svg {
+            width: 14px;
+            height: 14px;
+            stroke: var(--text-muted);
+            transition: stroke 0.2s ease;
+        }
+
+        .card:hover .card-title svg {
+            stroke: var(--text-primary);
+        }
+
+        .card-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.45;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            padding-top: 2rem;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 2rem 1rem 3rem;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <header>
+            <div class="avatar-wrapper">
+                <img src="photo.jpg" alt="Hosam Al Ali" class="avatar"
+                    onerror="this.src='https://ui-avatars.com/api/?name=Hosam+Al+Ali&background=161b22&color=f0f3f6&size=200'" />
+            </div>
+            <h1>Hosam Al Ali</h1>
+            <p class="subtitle">Cloud Architect — <span>OpenStack & Container Platforms</span></p>
+            <nav>
+                <a href="#experience">Experience</a>
+                <a href="#links">Links</a>
+                <a href="#projects">Projects & Tech</a>
+            </nav>
+        </header>
+
+        <!-- Experience Section -->
+        <section id="experience">
+            <h2>Experience</h2>
+            <div class="timeline">
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="role-title">Cloud Architect</div>
+                    <div class="company-name">Red Hat</div>
+                    <div class="meta">Jul 2026 — Present · Dubai, UAE</div>
+                    <ul>
+                        <li>Architecting OpenShift, Kubernetes, and enterprise cloud solutions across EMEA and GCC
+                            client infrastructures.</li>
+                        <li>Designing resilient container orchestration platforms, GitOps automation workflows, and
+                            modern cloud migrations.</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="role-title">Lead Cloud Architect & Senior OpenStack Engineer</div>
+                    <div class="company-name">Verda</div>
+                    <div class="meta">Previous · Sweden</div>
+                    <ul>
+                        <li>Engineered large-scale bare-metal provisioning and OpenStack core infrastructure (Nova,
+                            Neutron, Kolla-Ansible).</li>
+                        <li>Managed multi-cluster Ceph storage nodes and high-throughput OVN/EVPN network architectures.
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="role-title">Senior Cloud Engineer & Team Lead</div>
+                    <div class="company-name">Cleura AB</div>
+                    <div class="meta">Sweden</div>
+                    <ul>
+                        <li>Led cloud platform engineering teams managing public and sovereign OpenStack cloud regions.
+                        </li>
+                        <li>Automated infrastructure deployments and maintenance pipelines using Ansible Automation
+                            Platform.</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="role-title">Senior OpenStack Architect</div>
+                    <div class="company-name">STC Solutions</div>
+                    <div class="meta">Saudi Arabia</div>
+                    <ul>
+                        <li>Delivered carrier-grade NFV/SDN OpenStack deployments and telco cloud infrastructure.</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Links Section -->
+        <section id="links">
+            <h2>Links</h2>
+            <div class="grid">
+
+                <a href="https://github.com/YOUR_GITHUB_USERNAME" target="_blank" rel="noopener" class="card">
+                    <span class="card-category">Open Source</span>
+                    <div class="card-title">
+                        GitHub
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M7 17L17 7M17 7H7M17 7V17" />
+                        </svg>
+                    </div>
+                    <div class="card-desc">Repositories, automation playbooks, and open-source infrastructure tooling.
+                    </div>
+                </a>
+
+                <a href="https://linkedin.com/in/YOUR_LINKEDIN_USERNAME" target="_blank" rel="noopener" class="card">
+                    <span class="card-category">Professional</span>
+                    <div class="card-title">
+                        LinkedIn
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M7 17L17 7M17 7H7M17 7V17" />
+                        </svg>
+                    </div>
+                    <div class="card-desc">Professional background, network, and cloud architecture engagements.</div>
+                </a>
+
+                <a href="https://www.credly.com" target="_blank" rel="noopener" class="card">
+                    <span class="card-category">Credentials</span>
+                    <div class="card-title">
+                        Certifications
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M7 17L17 7M17 7H7M17 7V17" />
+                        </svg>
+                    </div>
+                    <div class="card-desc">Certified OpenStack Administrator, Red Hat certifications, and verified
+                        badges.</div>
+                </a>
+
+                <a href="mailto:your.email@example.com" class="card">
+                    <span class="card-category">Contact</span>
+                    <div class="card-title">
+                        Email
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M7 17L17 7M17 7H7M17 7V17" />
+                        </svg>
+                    </div>
+                    <div class="card-desc">Get in touch for consultations, discussions, or speaking opportunities.</div>
+                </a>
+
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects">
+            <h2>Projects & Focus Areas</h2>
+            <div class="grid">
+
+                <div class="card">
+                    <span class="card-category">Cloud Infrastructure</span>
+                    <div class="card-title">OpenStack Control Plane Automation</div>
+                    <div class="card-desc">Automated, reproducible bare-metal and control plane deployments leveraging
+                        Kolla-Ansible, OVN, and Ceph.</div>
+                </div>
+
+                <div class="card">
+                    <span class="card-category">Container Platform</span>
+                    <div class="card-title">OpenShift & GitOps Pipelines</div>
+                    <div class="card-desc">Argo CD and policy-driven Kubernetes environments configured with Kyverno and
+                        multi-tenant security baselines.</div>
+                </div>
+
+                <div class="card">
+                    <span class="card-category">Automation</span>
+                    <div class="card-title">Ansible Execution Environments</div>
+                    <div class="card-desc">Custom EE containers, testing matrices with Molecule/Testinfra, and
+                        event-driven automation workflows.</div>
+                </div>
+
+            </div>
+        </section>
+
+        <footer>
+            <div>© 2026 Hosam Al Ali · Dubai, United Arab Emirates</div>
+        </footer>
+    </div>
+
+</body>
+
+</html>
